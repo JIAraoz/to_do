@@ -20,6 +20,9 @@ module.exports=(sequelize)=>{
         type: DataTypes.STRING,
         
         
+      },
+      userId:{
+        type:DataTypes.INTEGER
       }
     })
 }

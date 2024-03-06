@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const { User } = require('../models');
+const { User } = require('../db');
 
 async function login(req, res) {
   const { email, password } = req.body;
@@ -22,7 +22,7 @@ async function login(req, res) {
     }
 
     // Si la contraseña coincide, iniciar sesión exitosamente
-    // Aquí podrías generar un token de sesión o establecer una cookie de sesión, dependiendo de tus necesidades
+    
 
     return res.status(200).json({ message: 'Inicio de sesión exitoso', user });
 
@@ -32,6 +32,4 @@ async function login(req, res) {
   }
 }
 
-module.exports = {
-  login,
-}
+module.exports = login
