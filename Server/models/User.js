@@ -5,13 +5,10 @@ const {DataTypes}=require('sequelize')
 module.exports=(sequelize)=>{
     sequelize.define('User',{
      uuid:{
+       primaryKey:true,
         type:DataTypes.UUID
         ,defaultValue:sequelize.UUIDV4
-        ,allowNull:false,
-        primaryKey:true
-
-
-     },
+        ,allowNull:false},
      username: {
         type: DataTypes.STRING,
         allowNull: false,

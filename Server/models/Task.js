@@ -4,14 +4,7 @@ const {DataTypes}=require('sequelize')
 
 module.exports=(sequelize)=>{
     sequelize.define('Task',{
-     uuid:{
-        type:DataTypes.UUID
-        ,defaultValue:sequelize.UUIDV4
-        ,allowNull:false,
-        primaryKey:true
-
-
-     },
+   
      title: {
         type: DataTypes.STRING,
         
@@ -21,8 +14,14 @@ module.exports=(sequelize)=>{
         
         
       },
-      userId:{
-        type:DataTypes.INTEGER
+      userId: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        primaryKey: true,
+        references: {
+          model: 'Users',
+          key: 'uuid'
+        }
       }
     })
 }

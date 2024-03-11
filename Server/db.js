@@ -28,7 +28,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 const{User,Task}=sequelize.models
 
 User.hasMany(Task)
-Task.belongsTo(User)
+Task.belongsTo(User, { foreignKey: 'userId' })
 
 
 module.exports={
