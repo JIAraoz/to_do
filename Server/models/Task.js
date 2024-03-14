@@ -1,4 +1,4 @@
-const {DataTypes}=require('sequelize')
+const {DataTypes, Sequelize}=require('sequelize')
 
 
 
@@ -14,14 +14,11 @@ module.exports=(sequelize)=>{
         
         
       },
-      userId: {
-        type: DataTypes.UUID,
+      uuid:{
+        type:DataTypes.UUID,
         allowNull: false,
+        defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
-        references: {
-          model: 'Users',
-          key: 'uuid'
-        }
-      }
+       }
     })
-}
+} 
