@@ -1,16 +1,35 @@
-const {Task}=require('../db')
-const postTask=(req,res)=>{
-    const {title,userId,body}=req.body
-    if (!title || !userId || !body) {
+const {Task,User}=require('../db')
+const postTask= async(req,res)=>{
+    const {title,userUuid,body}=req.body
+    if (!title || !userUuid || !body) {
         return res.status(400).json({ message: "Debe proporcionar el título, el ID del usuario y el cuerpo de la tarea" });
     }
     else{
-        Task.create({title,userId,body}).then((task)=>{
-            res.json(task).status(201)
-        }).catch((err)=>{
-            console.log('Error al crear tarea '+err);
-            res.json({error:err.message}).status(500)
-        })
+     try{
+        const user= await User.findOne({where:{
+            uuid:userUuid
+        }})
+        if(user){
+            const task=await Task.create({
+                title,body
+            })
+            await user.addTask(task)
+            res.json({
+                message:"Tarea creada correctamente"
+            }).status(201)
+        }
+        else{
+            res.json({
+                message:"Usuario no encontrado "
+            }).status(404)
+        }
+
+     }catch(err){
+        res.json({
+            message:err.message
+        }).status(500)
+
+     }
     }
     
 }

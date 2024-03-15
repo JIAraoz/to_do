@@ -1,18 +1,30 @@
-const {Task}=require('../db')
+const { Task, User } = require('../db');
 
-const getTask=(req,res)=>{
+const getTask = async (req, res) => {
+    const { userUuid } = req.body;
 
-   Task.findAll({where:{userId:req.params.userId}}).then((task)=>{
-    if(task.length>0){
-        res.json(task).status(200)
+    // Validar si se proporciona un uuid de usuario válido
+    if (!userUuid || typeof userUuid !== 'string' || userUuid.trim() === '') {
+        return res.status(400).json({ message: "Se necesita proporcionar un uuid válido del usuario" });
     }
-    else{
-        res.json({message:"no se encontraron tareas para este usuario"})
+
+    try {
+        // Buscar al usuario por su UUID
+        const user = await User.findOne({ where: { uuid: userUuid } });
+
+        // Verificar si se encontró el usuario
+        if (!user) {
+            return res.status(404).json({ message: "Usuario no encontrado" });
+        }
+
+        // Obtener todas las tareas asociadas al usuario
+        const tasks = await user.getTasks();
+
+        return res.status(200).json({ tasks });
+    } catch (error) {
+        console.error('Error al obtener tareas:', error);
+        return res.status(500).json({ message: "Error del servidor: " + error.message });
     }
-   }).catch((err)=>{
-    console.error('Error al recuperar las tareas:', error);
-    res.status(500).json({ message: "Error interno del servidor" })
-   })
-    
-}
-module.exports=getTask
+};
+
+module.exports = getTask;

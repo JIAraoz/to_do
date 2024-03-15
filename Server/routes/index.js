@@ -5,10 +5,7 @@ const getTask=require('../controllers/getTask')
 const router=Router()
 const postTask=require('../controllers/postTask')
 
-router.get("/prueba",(req,res)=>{
-    res.send("prueba")
-    console.log("prueba");
-})
+
 router.post('/register',register)
 
 router.post('/login',login)
