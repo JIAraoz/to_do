@@ -29,7 +29,7 @@ async function login(req, res) {
     }
     const token=jwt.sign(tokenPayload,process.env.JWT_SECRET)
     res.cookie("jwt",token)          
-    res.status(200).json({ message: 'Inicio de sesión exitoso',tokenPayload, access:true })  ;
+    res.status(200).json({ message: 'Inicio de sesión exitoso',user:tokenPayload, access:true })  ;
 
   } catch (error) {
     console.error('Error al iniciar sesión:', error);

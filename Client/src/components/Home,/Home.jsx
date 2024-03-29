@@ -1,7 +1,9 @@
+import axios from "axios"
+export default function  Home(user){
 
-export default function Home(){
     
-    return(
-        <h1>Welcome {}</h1>
+    return( <> 
+    <h1>Welcome {user.uuid}</h1>
+    </>
     )
 }

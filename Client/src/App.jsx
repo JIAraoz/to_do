@@ -13,6 +13,7 @@ function App() {
 })
 const[email,setEmail]=useState("")
 const[password,setPassword]=useState("")
+let user="hola"
 const navigate=useNavigate()
 
 useEffect(()=>{
@@ -34,6 +35,9 @@ function handleSubmit(e){
      email:email,
      password:password
   }).then(({data})=>{
+
+     user=data.user.user
+      
       
       setAccess({
           
@@ -41,18 +45,20 @@ function handleSubmit(e){
           accessMessage:data.message
       })
       
-  }).catch((err)=>{
-     
+      
+    }).catch((err)=>{
+      
       setAccess({
-          accessValue:err.response.data.access,
-          accessMessage:err.response.data.message
+        accessValue:err.response.data.access,
+        accessMessage:err.response.data.message
       })
-  })}
- 
-  return(
-    <Routes>
+    })}
+   
+    
+    return(
+      <Routes>
       <Route path='/' element={<Login handleSubmit={handleSubmit} handleChange={handleChange} access={access} email={email} password={password} />}/>
-      <Route path='/home'element={<Home/>}/>
+      <Route path='/home'element={<Home user={user}/>}/>
     </Routes>
   )
   
